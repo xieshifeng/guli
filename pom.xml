@@ -4,6 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>service</module>
+        <module>common</module>
+        <module>common/service_base</module>
+        <module>common/common_utils</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
