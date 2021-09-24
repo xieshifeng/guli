@@ -2,6 +2,7 @@ package com.atguigu.serviceedu.controller;
 
 
 import com.atguigu.commonutils.R;
+import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.atguigu.serviceedu.entity.EduTeacher;
 import com.atguigu.serviceedu.entity.vo.TeacherQuery;
 import com.atguigu.serviceedu.service.EduTeacherService;
@@ -38,6 +39,11 @@ public class EduTeacherController {
     public R list(){
 //        return eduTeacherService.list(null);
         List<EduTeacher> list = eduTeacherService.list(null);
+        try {
+            int i = 1 / 0 ;
+        } catch (Exception exception) {
+            throw new GuliException(200001,"出现异常异常了");
+        }
         return R.ok().data("item",list);
     }
 
@@ -96,6 +102,35 @@ public class EduTeacherController {
         long total = pageTeacher.getTotal();
         return R.ok().data("total",total).data("records",records);
 
+    }
+
+    //5 添加讲师接口的方法
+    @PostMapping("addTeacher")
+    public R addTeacher(@RequestBody EduTeacher eduTeacher){
+        boolean save = eduTeacherService.save(eduTeacher);
+        if(save){
+            return R.ok();
+        }else {
+            return R.error();
+        }
+    }
+
+    //6 根据讲师id进行查询
+    @GetMapping("getTeacher/{id}")
+    public R getTeacher(@PathVariable String id){
+        EduTeacher teacher = eduTeacherService.getById(id);
+        return R.ok().data("teacher",teacher);
+    }
+
+    //6 修改功能
+    @PostMapping("updateTeacher")
+    public R updateTeacher(@RequestBody EduTeacher eduTeacher){
+        boolean b = eduTeacherService.updateById(eduTeacher);
+        if (b){
+            return R.ok();
+        }else {
+            return R.error();
+        }
     }
 }
 
