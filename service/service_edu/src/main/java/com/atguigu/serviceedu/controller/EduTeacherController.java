@@ -28,6 +28,7 @@ import java.util.List;
  */
 @Api(description = "讲师管理")
 @RestController
+@CrossOrigin
 @RequestMapping("/serviceedu/edu-teacher")
 public class EduTeacherController {
     @Autowired
@@ -39,11 +40,6 @@ public class EduTeacherController {
     public R list(){
 //        return eduTeacherService.list(null);
         List<EduTeacher> list = eduTeacherService.list(null);
-        try {
-            int i = 1 / 0 ;
-        } catch (Exception exception) {
-            throw new GuliException(200001,"出现异常异常了");
-        }
         return R.ok().data("item",list);
     }
 
@@ -72,7 +68,7 @@ public class EduTeacherController {
     //4 条件查询带分页的方法
     @ApiOperation(value = "条件查询带分页的方法")
     @PostMapping ("pageTeacherCondition/{current}/{limit}")//从Get变成Post，因为@RequestBody的原因
-    public R pageTeacherCondition(@PathVariable long current,@PathVariable long limit,
+    public R pageTeacherCondition(@PathVariable Long current,@PathVariable Long limit,
                                   @RequestBody(required = false) TeacherQuery teacherQuery){//数据源需要时json，将json数据变为对象
         Page<EduTeacher> pageTeacher = new Page<>(current, limit);
         //创建page对象
@@ -132,5 +128,6 @@ public class EduTeacherController {
             return R.error();
         }
     }
+
 }
 
